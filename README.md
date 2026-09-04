@@ -5,7 +5,7 @@ showing coverage against NIST AI RMF 1.0 and ISO/IEC 42001 Annex A.
 
 **Live:** https://rootcawsllc.github.io/ai-risk-register/
 
-![The "Where these numbers come from" panel. It states that every frequency and magnitude in the register is a seeded estimate rather than a sourced one, explains that no equivalent loss data exists for first-party AI system risk because the public incident catalogues record what happened without recording what it cost, and carries a live check reporting that of twelve governed shards in the sourced corpus one is AI-related — deepfake-enabled fraud, at low confidence — which covers an attacker using AI against you rather than your own system failing, so it anchors none of these scenarios. A closing paragraph sets out what a dataset would have to report to qualify one](preview.png)
+![The register on the risk-lab shell. A full-width introduction under the lab kicker, then a scenario library of twelve toggles with four risks in the register, each with its trustworthiness and framework tags, three-point frequency and loss fields, and its expected, median and bad-year figures. Beneath: the aggregate exposure banner at the mean, P50, P90 and P99, the provenance panel explaining that every range is a seeded estimate, framework coverage bars for NIST AI RMF and ISO 42001, the Markdown export, and three closing notes in cards](preview.png)
 
 This panel is the reason to look at this tool rather than the loss figures above
 it. A register that produces dollar ranges owes you an account of where the
