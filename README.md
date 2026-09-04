@@ -3,7 +3,7 @@
 An AI risk register that produces **loss exposure ranges** instead of heat-map colours — while still
 showing coverage against NIST AI RMF 1.0 and ISO/IEC 42001 Annex A.
 
-**Live:** https://rootcawsllc.github.io/ai-risk-register/
+**Live:** https://rootcawsllc.github.io/ai-risk-register/ — when to use it, how to use it, and how to take the pattern into an organisation.
 
 ![The register on the risk-lab shell. A full-width introduction under the lab kicker, then a scenario library of twelve toggles with four risks in the register, each with its trustworthiness and framework tags, three-point frequency and loss fields, and its expected, median and bad-year figures. Beneath: the aggregate exposure banner at the mean, P50, P90 and P99, the provenance panel explaining that every range is a seeded estimate, framework coverage bars for NIST AI RMF and ISO 42001, the Markdown export, and three closing notes in cards](preview.png)
 
