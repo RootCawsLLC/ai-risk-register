@@ -40,7 +40,7 @@
       padding:6px 9px;width:100%;
     }
     /* Risk-lab shell: masthead, gutters, headings, carded notes. Shared with the other tools. */
-    :root{--ink-2:#4d4548;--muted:#7a7073;--soft-line:rgba(58,51,54,.08)}
+    :root{--ink-2:#4d4548;--muted:#7a7073;--soft-line:rgba(58,51,54,.08);--sage:#4c7359}
     .wrap{max-width:1400px;margin:0 auto;padding:0 24px}
     @media (max-width:767px){.wrap{padding:0 16px}}
     .masthead{padding-top:48px;padding-bottom:28px;margin-bottom:24px;border-bottom:1px solid var(--soft-line)}
@@ -58,6 +58,21 @@
     .note p{font-family:'Inter',sans-serif;font-size:14px;color:var(--ink-2);line-height:1.65}
     .note p+p{margin-top:8px}
     .notes.embedded{padding-top:6px}
+    .guide{padding:4px 0 28px}
+    .guide h2{font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:28px 0 12px;padding-bottom:10px;border-bottom:1px solid var(--soft-line)}
+    .guide h2:first-of-type{margin-top:0}
+    .guide-toc{display:flex;flex-wrap:wrap;gap:.35rem .9rem;margin:0 0 18px;font-size:13px;font-family:'Inter',sans-serif}
+    .guide-toc a{color:var(--accent)}
+    .guide-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media (max-width:699px){.guide-pair{grid-template-columns:1fr}}
+    .guide-box{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 26px rgba(58,51,54,.07);padding:16px 18px}
+    .guide-box.use{border-left:3px solid var(--sage)}
+    .guide-box.dont{border-left:3px solid var(--accent)}
+    .guide-box h3{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:18px;margin:0 0 8px;letter-spacing:-.01em;color:var(--ink)}
+    .guide-box ul,.guide ol{margin:0;padding-left:1.15rem}
+    .guide li{font-family:'Inter',sans-serif;font-size:14px;color:var(--ink-2);line-height:1.65;margin:.4rem 0}
+    .guide li b{color:var(--ink);font-weight:600}
+    .guide-close{font-family:'Inter',sans-serif;font-size:14px;color:var(--ink-2);line-height:1.65;margin:10px 0 0}
     .colophon{margin-top:28px;padding:20px 0 64px;border-top:1px solid var(--line);font-family:'Inter',sans-serif;font-size:12px;line-height:1.65;color:var(--muted)}
   </style>
 </head>
@@ -282,6 +297,38 @@
              ", where the shards that do have provenance carry it per parameter."]));
   }
 
+  function Guide(){
+    return h('section',{className:"guide","aria-label":"How to use this"},
+      h('nav',{className:"guide-toc","aria-label":"On this page"},
+        h('a',{href:"#when"},"When to use it"),
+        h('a',{href:"#how"},"How to use it"),
+        h('a',{href:"#org"},"Take it into your org")),
+      h('h2',{id:"when"},"When and where to use it"),
+      h('div',{className:"guide-pair"},
+        h('div',{className:"guide-box use"},h('h3',null,"Use it when"),
+          h('ul',null,
+            h('li',null,"An AI programme has a framework mapping and no loss figure."),
+            h('li',null,"You need to show NIST AI RMF or ISO 42001 coverage without pretending coverage is residual risk."),
+            h('li',null,"You are arguing an AI control budget against every other control investment, and a colour will not travel."))),
+        h('div',{className:"guide-box dont"},h('h3',null,"Do not use it when"),
+          h('ul',null,
+            h('li',null,"You are about to ship the seeded ranges as your organisation's exposure. They are illustrative. The incident base for AI-specific loss is thin."),
+            h('li',null,"A mapped category is being read as a satisfied control. Coverage means a risk maps there, not that the category is met."),
+            h('li',null,"You need a capital number. P99 from ten thousand illustrative years is a sorting aid, not a capital figure.")))),
+      h('h2',{id:"how"},"How to use it"),
+      h('ol',null,
+        h('li',null,h('b',null,"Seed. "),"Twelve scenarios arrive mapped to trustworthiness characteristics and to the two frameworks. Keep the ones that are yours. Delete the rest. Add what is missing."),
+        h('li',null,h('b',null,"Replace the ranges, then simulate. "),"Every risk takes a three-point frequency and loss. Ten thousand iterations produce a distribution per risk and a portfolio sum at the mean, P50, P90 and P99."),
+        h('li',null,h('b',null,"Read coverage and exposure as different questions. "),"The panel reports which of the nineteen NIST categories and nine ISO 42001 Annex A groups the register touches. That is coverage. The banner above it is exposure.")),
+      h('h2',{id:"org"},"Take it into your organisation"),
+      h('ol',null,
+        h('li',null,h('b',null,"Keep the twelve as a prompt list, not as a register. "),"Delete any that are not yours. Add the ones that are."),
+        h('li',null,h('b',null,"Calibrate frequency and magnitude "),"from your own incidents, near-misses, and a named source. If you cannot name the basis, do not show the number."),
+        h('li',null,h('b',null,"Report coverage and exposure as two slides, not one. "),"Coverage is for the auditor. Exposure is for the budget."),
+        h('li',null,h('b',null,"Re-run when a use case ships or a control changes. "),"A static AI register is a heat map with extra columns. Take the shape: every AI risk gets a range with a basis, a mapping, and a portfolio sum. Do not take the numbers.")),
+      h('p',{className:"guide-close"},"The notes below are the honest limits. The seeded ranges are the weak part; the shape of the argument is what survives."));
+  }
+
   function App(){
     const mb=useIsMobile();
     const [entries,setEntries]=useState(()=>
@@ -417,6 +464,7 @@
           "So most AI risk registers end up as a list of scenarios with a colour beside each one. Red is not a unit of measurement. You cannot add two reds, you cannot compare a red to a control budget, and you certainly cannot walk a CFO through one."),
         h('p',{className:"deck"},
           "This register keeps the framework mapping — you still need to show coverage — but scores every risk the way any other risk should be scored: a frequency range, a loss magnitude range, and a Monte Carlo that turns the two into an annual loss distribution you can aggregate and defend.")),
+      !EMBEDDED&&h(Guide),
 
       h('div',{style:Object.assign({},cardStyle(pd),{marginBottom:18})},
         h('div',{className:"panel-h"},"Scenario library"),
