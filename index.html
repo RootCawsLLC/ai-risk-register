@@ -39,6 +39,26 @@
       background:var(--panel);border:1px solid var(--line);border-radius:7px;
       padding:6px 9px;width:100%;
     }
+    /* Risk-lab shell: masthead, gutters, headings, carded notes. Shared with the other tools. */
+    :root{--ink-2:#4d4548;--muted:#7a7073;--soft-line:rgba(58,51,54,.08)}
+    .wrap{max-width:1400px;margin:0 auto;padding:0 24px}
+    @media (max-width:767px){.wrap{padding:0 16px}}
+    .masthead{padding-top:48px;padding-bottom:28px;margin-bottom:24px;border-bottom:1px solid var(--soft-line)}
+    .kicker{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+    .masthead h1{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(34px,4.6vw,56px);line-height:1.02;letter-spacing:-.02em;margin:10px 0 14px;color:var(--ink)}
+    .masthead h1 em{font-style:italic;color:var(--accent)}
+    .deck{font-family:'Inter',sans-serif;font-size:17px;color:var(--ink-2);line-height:1.6;margin-bottom:12px}
+    .deck:last-child{margin-bottom:0}
+    .panel-h{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:20px;letter-spacing:-.01em;color:var(--ink);margin-bottom:8px}
+    .notes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding-top:20px;padding-bottom:8px}
+    .notes::before{content:"Notes";grid-column:1/-1;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-bottom:10px;border-bottom:1px solid var(--soft-line)}
+    .note{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 26px rgba(58,51,54,.07);padding:18px 20px}
+    @media (max-width:899px){.notes{grid-template-columns:1fr}}
+    .note h3{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:19px;margin-bottom:8px;letter-spacing:-.01em;color:var(--ink)}
+    .note p{font-family:'Inter',sans-serif;font-size:14px;color:var(--ink-2);line-height:1.65}
+    .note p+p{margin-top:8px}
+    .notes.embedded{padding-top:6px}
+    .colophon{margin-top:28px;padding:20px 0 64px;border-top:1px solid var(--line);font-family:'Inter',sans-serif;font-size:12px;line-height:1.65;color:var(--muted)}
   </style>
 </head>
 <body>
@@ -385,24 +405,21 @@
     const numIn=(e,k,ph)=>h('input',{type:"text",value:e[k],placeholder:ph,
       onChange:ev=>edit(e.id,k,ev.target.value),"aria-label":k});
 
-    return h('div',{style:{maxWidth:1060,margin:"0 auto",
-      padding:EMBEDDED?(mb?"4px 16px 64px":"8px 24px 96px"):(mb?"28px 16px 64px":"48px 24px 96px")}},
+    return h('div',{className:"wrap",style:{paddingTop:EMBEDDED?(mb?4:8):0}},
 
-      !EMBEDDED&&h('div',{style:{marginBottom:mb?32:44}},
-        h('div',{style:Object.assign({},eyebrow,{color:C.amber,marginBottom:12})},"The lesson"),
-        h('h1',{style:{fontFamily:display,fontSize:mb?32:44,fontWeight:700,lineHeight:1.12,marginBottom:18,color:C.text}},
-          "AI frameworks give you coverage. They do not give you a ",h('em',{style:{fontStyle:"italic",color:C.accent}},"number")),
-        h('p',{style:Object.assign({},prose,{marginBottom:14})},
+      !EMBEDDED&&h('header',{className:"masthead"},
+        h('div',{className:"kicker"},"RootCaws · Risk lab"),
+        h('h1',null,
+          "AI frameworks give you coverage. They do not give you a ",h('em',null,"number")),
+        h('p',{className:"deck"},
           "NIST AI RMF 1.0 and ISO/IEC 42001 are good at what they are for. They tell you which questions an AI programme should be able to answer, and they give you a vocabulary an auditor recognises. What neither does — because neither is trying to — is tell you how much AI risk you are actually carrying."),
-        h('p',{style:Object.assign({},prose,{marginBottom:14})},
+        h('p',{className:"deck"},
           "So most AI risk registers end up as a list of scenarios with a colour beside each one. Red is not a unit of measurement. You cannot add two reds, you cannot compare a red to a control budget, and you certainly cannot walk a CFO through one."),
-        h('p',{style:prose},
+        h('p',{className:"deck"},
           "This register keeps the framework mapping — you still need to show coverage — but scores every risk the way any other risk should be scored: a frequency range, a loss magnitude range, and a Monte Carlo that turns the two into an annual loss distribution you can aggregate and defend.")),
 
-      h('div',{style:Object.assign({},eyebrow,{color:C.accent,marginBottom:16})},"The tool"),
-
       h('div',{style:Object.assign({},cardStyle(pd),{marginBottom:18})},
-        h('div',{style:Object.assign({},eyebrow,{fontSize:12,color:C.accent,marginBottom:6})},"Scenario library"),
+        h('div',{className:"panel-h"},"Scenario library"),
         h('div',{style:{fontFamily:ui,fontSize:13.5,lineHeight:1.6,color:C.textDim,marginBottom:14}},
           "Twelve AI-specific scenarios, each pre-mapped to the AI RMF categories and ISO 42001 Annex A groups it bears on. Click to add or remove."),
         h('div',{style:{display:"flex",flexWrap:"wrap",gap:8}},
@@ -480,7 +497,7 @@
       h(ProvenancePanel,{data:bmData,error:bmError,isMobile:mb}),
 
       h('div',{style:Object.assign({},cardStyle(pd),{marginBottom:18})},
-        h('div',{style:Object.assign({},eyebrow,{fontSize:12,color:C.accent,marginBottom:6})},"Framework coverage"),
+        h('div',{className:"panel-h"},"Framework coverage"),
         h('div',{style:{fontFamily:ui,fontSize:13.5,lineHeight:1.6,color:C.textDim,marginBottom:16}},
           "Which parts of each framework this register actually bears on. Coverage means a risk maps here — not that the category is satisfied."),
 
@@ -520,7 +537,7 @@
 
       h('div',{style:Object.assign({},cardStyle(pd),{marginBottom:32})},
         h('div',{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14,flexWrap:"wrap",gap:10}},
-          h('div',{style:Object.assign({},eyebrow,{fontSize:12,color:C.accent})},"Export"),
+          h('div',{className:"panel-h",style:{marginBottom:0}},"Export"),
           h('button',{onClick:copy,
             style:{fontFamily:ui,fontSize:12.5,fontWeight:600,cursor:"pointer",padding:"8px 16px",
               borderRadius:999,border:"1px solid "+C.accent,
@@ -531,17 +548,15 @@
             border:"1px solid "+C.border,borderRadius:12,padding:mb?12:18,
             overflowX:"auto",whiteSpace:"pre-wrap",wordBreak:"break-word",maxHeight:340}},exportMd)),
 
-      h('div',null,
-        h('div',{style:Object.assign({},eyebrow,{color:C.sage,marginBottom:12})},"The takeaway"),
-        h('p',{style:Object.assign({},prose,{marginBottom:14})},
-          "The seeded ranges here are illustrative, and they are the weakest part of any model like this. Frequency and magnitude for AI-specific loss events are not well established yet — the incident base is thin and mostly unpublished. Replace them with your own calibrated estimates before the output means anything about your organisation."),
-        h('p',{style:Object.assign({},prose,{marginBottom:14})},
-          "What survives that caveat is the shape of the argument. A range with a stated basis can be challenged on its basis. A colour can only be argued about. When an AI programme has to justify its budget against every other control investment, only one of those two travels."),
-        h('p',{style:prose},
-          "Coverage and exposure answer different questions, and you need both. Coverage tells an auditor the programme is complete; exposure tells a board whether it is worth what it costs.")),
+      h('section',{className:"notes"+(EMBEDDED?" embedded":""),"aria-label":"Notes"},
+        h('div',{className:"note"},h('h3',null,"The seeded ranges are the weak part"),
+          h('p',null,"They are illustrative, and they are the weakest part of any model like this. Frequency and magnitude for AI-specific loss events are not well established yet — the incident base is thin and mostly unpublished. Replace them with your own calibrated estimates before the output means anything about your organisation.")),
+        h('div',{className:"note"},h('h3',null,"What survives the caveat"),
+          h('p',null,"The shape of the argument. A range with a stated basis can be challenged on its basis. A colour can only be argued about. When an AI programme has to justify its budget against every other control investment, only one of those two travels.")),
+        h('div',{className:"note"},h('h3',null,"Coverage and exposure are different questions"),
+          h('p',null,"You need both. Coverage tells an auditor the programme is complete; exposure tells a board whether it is worth what it costs."))),
 
-      h('div',{style:{marginTop:36,paddingTop:20,borderTop:"1px solid "+C.border,
-          fontFamily:ui,fontSize:12,lineHeight:1.65,color:C.textDim}},
+      h('div',{className:"colophon"},
         "Category and control names are from ",
         h('a',{href:"https://www.nist.gov/itl/ai-risk-management-framework"},"NIST AI RMF 1.0"),
         " and ISO/IEC 42001:2023, used for mapping reference only. Mapping is at category and Annex A group level. Nothing you enter leaves your browser — no server, no storage, no telemetry."));
